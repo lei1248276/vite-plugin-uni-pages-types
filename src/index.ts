@@ -1,7 +1,6 @@
 import type { Plugin } from 'vite'
 import { readFile, writeFile, watchFile } from 'node:fs'
 import { join } from 'node:path'
-import chalk from 'chalk'
 
 export default function uniPagesTypes(): Plugin {
   return {
@@ -16,7 +15,11 @@ export default function uniPagesTypes(): Plugin {
       // 定义一个函数来读取 JSON 并写入 DTS 文件
       const updatePagesDts = () => {
         readFile(jsonFilePath, 'utf-8', (err, data) => {
-          if (err) return console.error(chalk.red('读取 pages.json 文件失败:', err))
+          if (err) {
+            console.error('\x1b[31m%s\x1b[0m', '[vite-plugin-pages-json-types]: 读取 pages.json 文件失败')
+            console.error('\x1b[31m%s\x1b[0m', err)
+            return
+          }
 
           try {
             let json
@@ -44,10 +47,14 @@ export default function uniPagesTypes(): Plugin {
               JSON.stringify(json, null, 2)
 
             writeFile(dtsFilePath, dtsContent, 'utf-8', (err) => {
-              if (err) console.error(chalk.red('写入 pages.d.ts 文件失败:', err))
+              if (err) {
+                console.error('\x1b[31m%s\x1b[0m', '[vite-plugin-pages-json-types]: 写入 pages.d.ts 文件失败')
+                console.error('\x1b[31m%s\x1b[0m', err)
+              }
             })
           } catch (error) {
-            console.error(chalk.red('[vite-plugin-uni-pages-types]: pages.json 文件格式错误\n', error))
+            console.error('\x1b[31m%s\x1b[0m', '[vite-plugin-pages-json-types]: pages.json 文件格式错误')
+            console.error('\x1b[31m%s\x1b[0m', error)
           }
         })
       }

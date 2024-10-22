@@ -13,7 +13,7 @@ export default defineConfig({
       formats: ['es', 'cjs']
     },
     rollupOptions: {
-      external: ['node:fs', 'node:path', 'chalk']
+      external: ['node:fs', 'node:path']
     }
   },
   plugins: [uniPagesTypes(), dts()]
