@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-uni-pages-types",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "动态生成 uni-app 的 pages.json 的类型文件 pages.d.ts",
   "license": "MIT",
   "repository": {
